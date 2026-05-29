@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1a3260;
+    --accent: #c8a96e;
+    --accent-light: #e8d5a8;
+    --white: #fafaf8;
+    --grey: #6b7280;
+    --border: #e2e0da;
+    --card-bg: #ffffff;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 70px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(200, 169, 110, 0.08);
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(200, 169, 110, 0.05);
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: white;
+  }
+
+  header h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .header-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin: 24px 0;
+  }
+
+  /* NAV DOTS */
+  nav {
+    background: var(--navy-mid);
+    padding: 0 40px;
+  }
+
+  nav ul {
+    max-width: 900px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    gap: 0;
+  }
+
+  nav a {
+    display: block;
+    padding: 14px 20px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .about-stat {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .stat-item .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-item .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .project-card:hover {
+    box-shadow: 0 8px 30px rgba(15,31,61,0.1);
+    transform: translateY(-2px);
+  }
+
+  .project-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .project-card p {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .project-finding {
+    background: #f8f7f4;
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--navy);
+    font-weight: 500;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .project-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .tool-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: #f1f0ec;
+    border-radius: 20px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .project-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .project-link::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .project-card:hover .project-link::after {
+    transform: translateX(4px);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .skill-group {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .skill-group-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .skill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 30px 40px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .about-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; }
+    section { padding: 40px 20px; }
+    header { padding: 50px 20px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Data Science Portfolio</div>
+    <h1>Raelin <em>Weber</em></h1>
+    <div class="header-divider"></div>
+    <p class="header-sub">Third-year Data Science student at Eduvos — turning raw data into business decisions.</p>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<div id="about"><hr class="divider"></div>
+<section>
+  <div class="section-label">Who I am</div>
+  <div class="section-title">About Me</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a third-year Data Science student at Eduvos with a focus on translating data into actionable business insight — not just charts.</p>
+      <p>My projects start with a business question, not a dataset. I care about what the numbers mean in practice: revenue impact, customer behaviour, and decisions that can actually be acted on.</p>
+      <p>I'm looking for opportunities where analytical rigour meets real business problems.</p>
+    </div>
+    <div class="about-stat">
+      <div class="stat-item">
+        <div class="stat-num">99k+</div>
+        <div class="stat-label">Real orders analysed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">R$1M+</div>
+        <div class="stat-label">Revenue opportunities identified</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">End-to-end portfolio projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<div id="projects"><hr class="divider"></div>
+<section>
+  <div class="section-label">My work</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <a class="project-card" href="https://github.com/raelinweber/olist-funnel-analysis" target="_blank">
+      <div class="project-tag">Funnel Analysis · E-Commerce</div>
+      <h3>Olist Customer Funnel Analysis</h3>
+      <p>Full funnel analysis of 99,441 real Brazilian e-commerce orders — identifying where revenue leaks and why customers are dissatisfied.</p>
+      <div class="project-finding">📌 R$ 3.27M in satisfaction-linked revenue at risk — 87% of total funnel leakage</div>
+      <div class="project-tools">
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">pandas</span>
+        <span class="tool-tag">plotly</span>
+        <span class="tool-tag">scipy</span>
+        <span class="tool-tag">statsmodels</span>
+      </div>
+      <div class="project-link">View on GitHub</div>
+    </a>
+
+    <a class="project-card" href="https://github.com/raelinweber/walmart-sales-forecasting" target="_blank">
+      <div class="project-tag">Time Series · Forecasting</div>
+      <h3>Walmart Sales Forecasting</h3>
+      <p>Time series analysis and sales forecasting model built on Walmart retail data — decomposing trend, seasonality, and producing forward-looking predictions.</p>
+      <div class="project-finding">📌 Predictive model identifying seasonal demand patterns across store departments</div>
+      <div class="project-tools">
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">pandas</span>
+        <span class="tool-tag">statsmodels</span>
+        <span class="tool-tag">Time Series</span>
+      </div>
+      <div class="project-link">View on GitHub</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills"><hr class="divider"></div>
+<section>
+  <div class="section-label">What I work with</div>
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-item"><span class="skill-dot"></span>Python</div>
+      <div class="skill-item"><span class="skill-dot"></span>SQL</div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Libraries & Tools</div>
+      <div class="skill-item"><span class="skill-dot"></span>pandas</div>
+      <div class="skill-item"><span class="skill-dot"></span>plotly</div>
+      <div class="skill-item"><span class="skill-dot"></span>scipy</div>
+      <div class="skill-item"><span class="skill-dot"></span>statsmodels</div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Platforms</div>
+      <div class="skill-item"><span class="skill-dot"></span>Excel</div>
+      <div class="skill-item"><span class="skill-dot"></span>Power BI</div>
+      <div class="skill-item"><span class="skill-dot"></span>GitHub</div>
+      <div class="skill-item"><span class="skill-dot"></span>Jupyter Notebooks</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+<footer>
+  <p>Raelin Weber · Data Science · Eduvos · <a href="https://github.com/raelinweber" target="_blank">github.com/raelinweber</a></p>
+</footer>
+
+</body>
+</html>
