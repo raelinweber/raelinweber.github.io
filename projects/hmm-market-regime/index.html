@@ -1,107 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Market Regime Detection | Raelin Weber</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0f1f3d;--navy-mid:#1a3260;--accent:#c8a96e;--white:#fafaf8;--grey:#6b7280;--border:#e2e0da}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--navy);line-height:1.7}
-header{background:var(--navy);color:white;padding:54px 24px}
-.wrap{max-width:920px;margin:auto}
-.eyebrow,.label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:600}
-h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;line-height:1.2}
-h1{font-size:clamp(2rem,5vw,3.2rem);margin:14px 0}
-header p{max-width:700px;color:rgba(255,255,255,.72)}
-nav{background:var(--navy-mid);padding:12px 24px}
-nav .wrap{display:flex;gap:22px;flex-wrap:wrap}
-nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px}
-main{padding:42px 24px 64px}
-section{margin:0 auto 42px;max-width:920px}
-h2{font-size:1.8rem;margin:8px 0 18px}
-p{color:#374151;margin:0 0 14px}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.pill{border:1px solid rgba(232,213,168,.35);color:var(--accent-light);border-radius:30px;padding:5px 12px;font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.metric,.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:20px}
-.metric strong{display:block;font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--navy)}
-.metric span{font-size:12px;color:var(--grey)}
-.panel{margin-top:18px}
-table{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:14px}
-th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border)}
-th{color:var(--grey);font-weight:600;font-size:12px}
-ul{padding-left:20px;color:#374151}
-li{margin:7px 0}
-.callout{border-left:3px solid var(--accent);background:#f3f1eb;padding:16px 18px;border-radius:0 8px 8px 0;margin-top:18px;color:var(--navy)}
-a{color:var(--navy)}
-.actions{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px}
-.actions a{font-weight:600;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:3px}
-footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:25px;font-size:12px}
-footer a{color:var(--accent)}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--navy);line-height:1.7}
+header{background:var(--navy);color:white;padding:54px 24px}.wrap{max-width:920px;margin:auto}.eyebrow,.label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;line-height:1.2}h1{font-size:clamp(2rem,5vw,3.2rem);margin:14px 0}header p{max-width:700px;color:rgba(255,255,255,.72)}
+nav{background:var(--navy-mid);padding:12px 24px}nav .wrap{display:flex;gap:22px;flex-wrap:wrap}nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px}
+main{padding:42px 24px 64px}section{margin:0 auto 42px;max-width:920px}h2{font-size:1.8rem;margin:8px 0 18px}p{color:#374151;margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.pill{border:1px solid rgba(232,213,168,.35);color:var(--accent);border-radius:30px;padding:5px 12px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.metric,.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:20px}.metric strong{display:block;font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--navy)}.metric span{font-size:12px;color:var(--grey)}
+.panel{margin-top:18px}table{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:14px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border)}th{color:var(--grey);font-weight:600;font-size:12px}
+ul{padding-left:20px;color:#374151}li{margin:7px 0}.callout{border-left:3px solid var(--accent);background:#f3f1eb;padding:16px 18px;border-radius:0 8px 8px 0;margin-top:18px;color:var(--navy)}
+a{color:var(--navy)}.actions{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px}.actions a{font-weight:600;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:3px}
+footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:25px;font-size:12px}footer a{color:var(--accent)}
 @media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:32px 18px 48px}header{padding:42px 18px}table{font-size:12px}th,td{padding:9px 6px}}
-</style>
-</head>
+</style></head>
 <body>
-<header><div class="wrap">
-<div class="eyebrow">Machine Learning · Financial Data Science</div>
+<header><div class="wrap"><div class="eyebrow">Machine Learning · Financial Data Science</div>
 <h1>Market Regime Detection<br><em>Using Gaussian Hidden Markov Models</em></h1>
-<p>A collaborative research project investigating whether probabilistic market-regime identification can improve the risk and performance profile of traditional S&P 500 trading strategies.</p>
+<p>A collaborative research project investigating whether probabilistic market-regime identification can reduce downside risk in two S&P 500 trading strategies.</p>
 <div class="meta"><span class="pill">Eduvos · ITDPA3-34</span><span class="pill">Group 3 project</span><span class="pill">S&P 500 · 2000–2024</span><span class="pill">Python</span></div>
-<div class="actions"><a href="../../">← Back to portfolio</a><a href="https://github.com/raelinweber/raelinweber.github.io/blob/main/projects/hmm-market-regime/README.md">Read project documentation</a></div>
-</div></header>
+<div class="actions"><a href="../../">← Back to portfolio</a><a href="https://github.com/raelinweber/raelinweber.github.io/blob/main/projects/hmm-market-regime/README.md">Read full project README</a><a href="https://github.com/raelinweber/raelinweber.github.io/blob/main/projects/hmm-market-regime/HMM_Market_Regime_Detection.ipynb">View Jupyter notebook</a></div></div></header>
 <nav><div class="wrap"><a href="#overview">Overview</a><a href="#method">Methodology</a><a href="#results">Results</a><a href="#limitations">Limitations</a></div></nav>
 <main>
 <section id="overview"><div class="label">01 · Research overview</div><h2>What we investigated</h2>
-<p>Financial markets move through changing conditions, including periods of differing volatility and momentum. This project examined whether a Gaussian Hidden Markov Model (GHMM) could infer these latent market regimes and use the estimated stress probability to filter two rule-based strategies.</p>
-<p>The model was designed as a regime-identification and risk-management filter, not as a model for predicting exact future prices.</p>
-<div class="grid">
-<div class="metric"><strong>7</strong><span>Hidden market states</span></div>
-<div class="metric"><strong>15</strong><span>Annual out-of-sample folds</span></div>
-<div class="metric"><strong>3,748</strong><span>Out-of-sample daily returns</span></div>
-</div>
-</section>
+<p>This project examined whether a Gaussian Hidden Markov Model could infer latent market regimes and filter a 20/50-day simple moving-average crossover and a 20-day breakout strategy. The HMM was used as a regime-based risk filter, not to forecast exact future prices.</p>
+<div class="grid"><div class="metric"><strong>2–4</strong><span>Candidate hidden states, selected by BIC</span></div><div class="metric"><strong>4,749</strong><span>Out-of-sample regime predictions</span></div><div class="metric"><strong>4,747</strong><span>Next-open holding-period returns</span></div></div></section>
 <section id="method"><div class="label">02 · Methodology</div><h2>How the framework worked</h2>
-<ul>
-<li>Historical daily S&P 500 index data from 2000 to 2024.</li>
-<li>Three model inputs: 20-day realised volatility, RSI (14) and Rate of Change (14).</li>
-<li>A seven-state Gaussian HMM, with states ranked by their mean volatility.</li>
-<li>The combined probability of stress states was used as a filter. At a threshold of 0.5, the strategy moved to cash for the next trading day.</li>
-<li>Two strategies were tested: a 50/200-day SMA crossover and a 50-day breakout.</li>
-<li>Expanding-window annual walk-forward evaluation from 2010 to 2024, with training-only scaling and fitting, forward-filtered probabilities, a one-day execution delay and 5 basis points per position change.</li>
-</ul>
-<div class="callout">Chronological validation was used to avoid training on future observations. Results were evaluated out of sample rather than using a random train/test split.</div>
-</section>
-<section id="results"><div class="label">03 · Results</div><h2>Performance comparison</h2>
-<p>The HMM filter reduced maximum drawdown and improved the reported Sharpe ratio for both tested strategies. The largest improvement was observed for the SMA crossover.</p>
-<div class="panel"><table>
-<thead><tr><th>Strategy</th><th>Sharpe before</th><th>Sharpe after</th><th>Max drawdown before</th><th>Max drawdown after</th></tr></thead>
-<tbody>
-<tr><td>50/200-day SMA</td><td>0.212</td><td><strong>0.539</strong></td><td>-40.7%</td><td><strong>-20.8%</strong></td></tr>
-<tr><td>50-day breakout</td><td>0.063</td><td><strong>0.200</strong></td><td>-33.1%</td><td><strong>-25.9%</strong></td></tr>
+<ul><li>Historical daily S&P 500 OHLCV data from 2000–2024.</li><li>Candidate inputs included realised volatility, SMA measures, RSI (14) and Rate of Change (14).</li><li>Training-only correlation filtering at |r| &gt; 0.80 and training-only standardisation.</li><li>Diagonal-covariance Gaussian HMMs with 2, 3 and 4 candidate states; BIC selected the model for each rolling training window.</li><li>Twenty random initialisations per candidate state count, with a documented numerical fallback.</li><li>Favourable states identified separately for each strategy using training-only positive mean gross open-to-open returns on eligible long signals.</li><li>31-observation rolling training window; 2000–2005 pilot rows excluded from final HMM train/test rows.</li><li>Close(t) signal, open(t+1) execution and open(t+2) holding-period valuation.</li><li>5 bps transaction costs plus 2 bps slippage per position change.</li></ul>
+<div class="callout">The final run used chronological walk-forward predictions, training-window-only scaling and feature selection, and an audited prediction checkpoint.</div></section>
+<section id="results"><div class="label">03 · Results</div><h2>Out-of-sample performance</h2>
+<p>The final run generated 4,749 regime predictions from 16 February 2006 to 30 December 2024, and 4,747 next-open holding-period returns from 17 February 2006 to 27 December 2024.</p>
+<div class="panel"><table><thead><tr><th>Strategy</th><th>Net return</th><th>Sharpe</th><th>Max drawdown</th></tr></thead><tbody>
+<tr><td>SMA unfiltered</td><td><strong>128.992%</strong></td><td><strong>0.446</strong></td><td>−29.432%</td></tr>
+<tr><td>SMA HMM-filtered</td><td>21.577%</td><td>0.166</td><td><strong>−18.950%</strong></td></tr>
+<tr><td>20-day breakout unfiltered</td><td><strong>98.954%</strong></td><td><strong>0.396</strong></td><td>−40.990%</td></tr>
+<tr><td>20-day breakout HMM-filtered</td><td>40.293%</td><td>0.261</td><td><strong>−29.462%</strong></td></tr>
 </tbody></table></div>
-<div class="panel"><h3>Statistical checks</h3><ul>
-<li>Buy-and-hold remained stronger, with a Sharpe ratio of 0.758 and annualised return of 12.3%.</li>
-<li>The SMA HMM variant recorded a PSR of 0.980.</li>
-<li>No variant reached the 0.95 DSR threshold; the best reported DSR was 0.822.</li>
-<li>Placebo test: SMA p = 0.003; breakout p = 0.070.</li>
-<li>The seven-state model's seed agreement was limited (ARI = 0.634).</li>
-</ul></div>
-<div class="callout"><strong>Interpretation:</strong> The findings suggest potential value as a downside-risk filter, particularly for the SMA strategy. They do not establish a reliable trading edge: buy-and-hold remained stronger, and the DSR and stability checks warrant caution.</div>
-</section>
-<section id="limitations"><div class="label">04 · Limitations & collaboration</div><h2>Context matters</h2>
-<ul>
-<li>The study focused on one index, one historical period and two trend-following strategies.</li>
-<li>The S&P 500 cash index is not directly tradable and excludes dividends.</li>
-<li>Transaction costs were simplified and did not fully represent market impact, borrowing costs or all execution frictions.</li>
-<li>Hidden states are statistical estimates, not verified economic labels.</li>
-<li>Model stability was imperfect, with ARI = 0.634 for the seven-state model.</li>
-</ul>
-<p>This was a collaborative academic group project completed by Eduvos ITDPA3-34 Group 3. I worked with my group members across the research, implementation, experimentation and evaluation. The findings and outcomes presented here belong to the group's work.</p>
-<p>The project is an academic historical simulation, not an investment recommendation or a live trading system.</p>
-<div class="actions"><a href="https://github.com/raelinweber/raelinweber.github.io/blob/main/projects/hmm-market-regime/README.md">Full README and project notes →</a><a href="https://github.com/raelinweber">GitHub profile →</a></div>
-</section>
-</main>
-<footer>Raelin Weber · Data Science Portfolio · <a href="../../">Return to portfolio</a></footer>
+<div class="callout"><strong>Interpretation:</strong> Filtering reduced maximum drawdown for both strategies, but it also reduced net cumulative returns and annualised Sharpe ratios. The results indicate a possible downside-risk benefit, not an improvement in the study's main Sharpe-based performance criterion. A numerical DSR was not reported because the effective independent number of performance-selection trials could not be established.</div></section>
+<section id="limitations"><div class="label">04 · Limitations & collaboration</div><h2>What the results do and don't show</h2>
+<ul><li>31-observation training window; the earlier methodology contains a disclosed 30-versus-31-observation wording inconsistency.</li><li>Some windows retained only one feature; feature dimensions and hidden-state labels could vary.</li><li>High posterior probabilities do not prove economic validity of hidden states.</li><li>The S&P 500 cash index is not directly investable; this is a historical index-price simulation.</li><li>Transaction costs and slippage are simplified, and findings are limited to one index, one period and two strategies.</li></ul>
+<p>This was a collaborative academic group project completed by Eduvos ITDPA3-34 Group 3. I worked with my group members across the research, implementation, experimentation and evaluation. The methodology, code, experiments and reported findings represent the group's collaborative work.</p>
+<p>This project is an academic historical simulation, not investment advice, a live trading system or evidence of future profitability.</p>
+<div class="actions"><a href="https://github.com/raelinweber/raelinweber.github.io/tree/main/projects/hmm-market-regime">Explore project files on GitHub →</a><a href="../../">Return to portfolio</a></div></section>
+</main><footer>Raelin Weber · Data Science Portfolio · <a href="../../">Return to portfolio</a></footer>
 </body></html>
