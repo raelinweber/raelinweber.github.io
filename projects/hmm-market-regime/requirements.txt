@@ -1,0 +1,11 @@
+# Core environment recorded in the final project report
+numpy==2.5.4
+pandas==3.0.6
+scikit-learn==1.9.1
+hmmlearn==0.3.3
+scipy==1.18.1
+matplotlib==3.11.2
+seaborn
+
+# Optional: used for the separate NYSE calendar audit
+pandas-market-calendars
