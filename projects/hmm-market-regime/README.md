@@ -1,82 +1,84 @@
-# Gaussian Hidden Markov Model for S&P 500 Market Regime Detection
+# Gaussian Hidden Markov Model for S&P 500 Market-Regime Filtering
 
 **Category:** Machine Learning · Financial Data Science · Time-Series Analysis  
 **Institution:** Eduvos · ITDPA3-34  
 **Project type:** Collaborative academic group project  
-**Study period:** S&P 500 daily data, 2000–2024  
-**Out-of-sample evaluation:** 2010–2024
+**Dataset:** S&P 500 daily OHLCV (`^GSPC`), 3 January 2000 – 30 December 2024
 
 ## Overview
 
-This group project investigated whether a Gaussian Hidden Markov Model (GHMM) could identify changing market conditions and act as a risk-management filter for two rule-based S&P 500 trading strategies.
+This collaborative project investigated whether a Gaussian Hidden Markov Model (HMM) could identify latent market regimes and filter two predefined S&P 500 trading strategies: a 20/50-day simple moving-average (SMA) crossover and a 20-day breakout.
 
-The model was used for market-regime identification, not exact price forecasting. Its inferred stress probability controlled whether each strategy remained active or moved to cash for the next trading day.
-
-## Research question
-
-Does regime-based filtering improve the risk-adjusted performance of a 50/200-day simple moving-average (SMA) crossover and a 50-day breakout strategy compared with their unfiltered versions?
+The HMM was used as a regime-based risk filter, not as a model for predicting exact future prices.
 
 ## Methodology
 
-- Historical daily S&P 500 index data (^GSPC), covering 2000–2024.
-- Three engineered inputs: 20-day realised volatility, RSI (14), and Rate of Change (14).
-- Gaussian HMM with seven hidden states, selected using a held-out validation period.
-- Hidden states ranked from calmer to more stressed using their mean volatility.
-- Stress states defined using a training-period coverage rule; their probabilities were combined.
-- When the combined stress probability reached 0.5 or higher, the strategy was switched off for the next trading day.
-- Expanding-window annual walk-forward evaluation over 15 out-of-sample folds from 2010 to 2024, producing 3,748 out-of-sample daily returns.
-- Scaling and model fitting used training data only; filtered probabilities used past information only.
-- One-day execution delay and transaction costs of 5 basis points per position change.
+- Processed historical S&P 500 daily OHLCV data from 2000–2024.
+- Engineered candidate inputs: realised volatility, SMA measures, RSI (14) and Rate of Change (14).
+- Applied training-window-only feature correlation filtering at an absolute correlation threshold of 0.80.
+- Standardised features using each training window only.
+- Fitted diagonal-covariance Gaussian HMMs with 2, 3 and 4 candidate states; selected the candidate with the lowest Bayesian Information Criterion (BIC).
+- Used 20 random initialisations per candidate state count, with a documented numerical transition-prior fallback.
+- Identified favourable states separately for each strategy using training-only positive mean gross open-to-open returns on eligible long signals.
+- Generated signals at close of day t, entered at the next session's open, and evaluated the holding period through the following open.
+- Applied 5 basis points in transaction costs plus 2 basis points in slippage per position change (7 bps total).
+- Used a rolling 31-observation training window. The final HMM train/test rows excluded the 2000–2005 pilot period.
 
-## Results
+## Final out-of-sample evaluation
 
-The HMM filter reduced maximum drawdown for both strategies and improved the reported Sharpe ratio of both strategy variants. The strongest improvement was observed for the SMA crossover.
+The final run generated **4,749 regime predictions** from 16 February 2006 to 30 December 2024. It produced **4,747 next-open holding-period returns** from 17 February 2006 to 27 December 2024.
 
-| Strategy | Sharpe, unfiltered | Sharpe, HMM-filtered | Max drawdown, unfiltered | Max drawdown, HMM-filtered |
-|---|---:|---:|---:|---:|
-| 50/200-day SMA crossover | 0.212 | **0.539** | -40.7% | **-20.8%** |
-| 50-day breakout | 0.063 | **0.200** | -33.1% | **-25.9%** |
+### Strategy results
 
-### Statistical checks and interpretation
+| Strategy | Net cumulative return | Annualised Sharpe | Maximum drawdown |
+|---|---:|---:|---:|
+| SMA unfiltered | **128.992%** | **0.446** | **−29.432%** |
+| SMA HMM-filtered | 21.577% | 0.166 | **−18.950%** |
+| 20-day breakout unfiltered | **98.954%** | **0.396** | **−40.990%** |
+| 20-day breakout HMM-filtered | 40.293% | 0.261 | **−29.462%** |
 
-- Buy-and-hold remained the stronger benchmark, with a reported Sharpe ratio of 0.758 and annualised return of 12.3%.
-- The SMA HMM variant recorded a Probabilistic Sharpe Ratio (PSR) of 0.980.
-- No strategy variant reached the stated 0.95 Deflated Sharpe Ratio (DSR) reliability threshold; the best reported DSR was 0.822.
-- The placebo test supported the SMA result (p = 0.003); the breakout result was not significant at the 0.05 threshold (p = 0.070).
-- The seven-state model's seed agreement was limited (ARI = 0.634), which is an important model-stability qualification.
+### Interpretation
 
-**Conclusion:** The results suggest that the GHMM filter can help reduce downside exposure, particularly for the SMA crossover, but do not establish a consistently reliable trading edge. It did not outperform buy-and-hold, and the statistical and stability checks warrant caution.
+The HMM filter reduced maximum drawdown for both strategies. However, the filtered strategies had lower net cumulative returns and lower annualised Sharpe ratios than their unfiltered counterparts. The filter therefore showed a narrower potential benefit in downside-risk mitigation, not an improvement in the study's main Sharpe-based performance criterion.
+
+The final report includes a supplementary Probabilistic Sharpe Ratio assessment. A numerical Deflated Sharpe Ratio (DSR) was **not reported**, because a defensible effective number of independent performance-selection trials was not established.
+
+## Validation and limitations
+
+The final experiment's programmed checks passed for 4,749 prediction dates and 4,747 holding-period returns, including date ordering, training-window chronology, valid state probabilities, unchanged original signals, and independent reconciliation of positions, costs and equity calculations.
+
+Important qualifications:
+
+- The 31-observation fitting window follows the inclusive 31-day worked example in the earlier methodology; the earlier prose also refers to 30 days. This inconsistency is disclosed in the submitted report.
+- Some fitted windows retained only one feature, and feature dimensions and hidden-state labels could vary between windows.
+- High posterior probabilities do not establish that a hidden state is economically valid.
+- The S&P 500 cash index is not directly investable; the backtest is a historical index-price simulation.
+- Transaction costs and slippage are simplified and do not capture every execution friction.
+- The results concern one index, one historical period and two strategies; they should not be assumed to generalise.
+
+## Repository contents and running the notebook
+
+- `HMM_Market_Regime_Detection.ipynb` — cleaned final submission notebook.
+- `hmm_experiment_config_FINAL.json` — final experiment configuration (not the earlier exploratory configuration).
+- `requirements.txt` — recorded core Python package versions.
+
+**Required local inputs not included in this public repository yet:**
+
+1. `hmm_dataset.csv` — the original S&P 500 OHLCV source file.
+2. `final_report_outputs/methodology_aligned_predictions_strict.csv` — the authoritative 4,749-row final prediction checkpoint.
+
+The notebook's default Run All path expects these files. Without them, it cannot reproduce the final tables and figures. The notebook includes an optional HMM retraining path, but that still requires the original dataset and is computationally expensive. The dataset and checkpoint have not been uploaded because their availability and redistribution permissions have not yet been confirmed.
+
+To run once the required inputs are available, place the notebook, `hmm_dataset.csv` and `final_report_outputs/` in the same project directory, install `requirements.txt`, then run the notebook from top to bottom.
 
 ## Tools and concepts
 
-- Python
-- pandas and NumPy
-- hmmlearn (GaussianHMM)
-- scikit-learn (StandardScaler)
-- SciPy
-- Matplotlib and Seaborn
-- Jupyter Notebook
-- Hidden Markov Models, feature engineering, time-series analysis, walk-forward validation, backtesting and statistical evaluation
+Python · Jupyter Notebook · pandas · NumPy · scikit-learn · hmmlearn · SciPy · Matplotlib · Seaborn · Gaussian HMM · BIC model selection · feature engineering · time-series analysis · walk-forward validation · backtesting · statistical evaluation.
 
 ## Collaboration
 
-This was a collaborative academic group project completed by Group 3 for Eduvos module ITDPA3-34. I worked on the project with my group members across the research, implementation, experimentation and evaluation. The work and findings presented here are the group's project outcomes.
+This was a collaborative academic group project completed by Eduvos ITDPA3-34 Group 3. I worked with my group members across the research, implementation, experimentation and evaluation. The methodology, code, experiments and reported findings represent the group's collaborative work.
 
-## Limitations
+## Academic-use note
 
-- The experiment covers one index and one historical evaluation period.
-- The S&P 500 cash index is not directly tradable and excludes dividends.
-- Transaction costs are simplified; market impact, borrowing costs and other real-world frictions are not fully represented.
-- Both tested strategies are trend-following, so findings may not generalise to other strategy types or markets.
-- The model's hidden states are statistical estimates, not verified economic labels.
-- The seven-state model showed limited seed agreement, and the DSR did not meet the project's reliability threshold.
-
-This is an academic historical simulation, not an investment recommendation or evidence of a live trading system.
-
-## Reproducibility and project files
-
-The public project page currently documents the research design and the final reported findings. The notebook and supporting data/figures are being cleaned and checked for consistency before publication. Historical market-data redistribution rights will also be considered before any dataset is included.
-
-## Acknowledgements
-
-Developed collaboratively by Eduvos ITDPA3-34 Group 3. The final academic submission is the source for the methodology and reported results.
+This is an academic historical simulation, not investment advice, a live trading system, or evidence of future profitability.
